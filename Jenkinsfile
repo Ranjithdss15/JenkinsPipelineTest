@@ -11,6 +11,13 @@ stage ("local")
 def buildNumber = Jenkins.instance.getItem('getBuildNumber').lastSuccessfulBuild.number
 print buildNumber
   }
+  
+stage ("Last Build")
+  {
+  def lastbuild =  = Jenkins.instance.getItem('getBuildNumber').lastBuild.number
+print lastbuild
+    
+     }
 
 stage("url")
 {
