@@ -50,5 +50,8 @@ stage ("check")
   {
   print "Successfully invoked"
   }
+  else {
+    print "failed"
+  }
   
 }
