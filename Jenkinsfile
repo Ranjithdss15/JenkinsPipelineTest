@@ -33,7 +33,7 @@ print latestBuildNumber
 
 stage ("Invoke Pipeline")
   {
-    step{
+    steps {
     echo "Invoke Pipeline"
     build job: 'getBuildNumber', parameters: [
                 string(name: 'variable1', value: "from Pipeline") ]
