@@ -9,7 +9,7 @@ echo "url"
 //latestBuildNumber = "${data.lastSuccessfulBuild.number}"
 //print latestBuildNumber
 
-node('node') {
+node('master') {
 
   stage("test"){
   
