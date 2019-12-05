@@ -9,14 +9,14 @@ node('master') {
 stage ("local")
 {
   echo "lastSuccessfulBuild"
-def buildNumber = Jenkins.instance.getItem('getBuildNumber').lastSuccessfulBuild.number
+def buildNumber = Jenkins.instance.getItem('getBuildNumber_pipeline').lastSuccessfulBuild.number
 print buildNumber
   }
   
 stage ("Last Build")
   {
     echo "lastbuild"
-  def lastbuild =  Jenkins.instance.getItem('getBuildNumber').lastBuild.number
+  def lastbuild =  Jenkins.instance.getItem('getBuildNumber_pipeline').lastBuild.number
 print lastbuild
     
      }
