@@ -30,4 +30,12 @@ latestBuildNumber = "${data.lastSuccessfulBuild.number}"
 print latestBuildNumber
 }
 */
+
+stage ("Invoke Pipeline")
+  {
+    echo "Invoke Pipeline"
+    build job: 'getBuildNumber', parameters: [
+                string(name: 'variable1', value: "from Pipeline") ]
+
+     }
 }
