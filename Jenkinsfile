@@ -8,12 +8,14 @@ node('master') {
   }
 stage ("local")
 {
+  echo "lastSuccessfulBuild"
 def buildNumber = Jenkins.instance.getItem('getBuildNumber').lastSuccessfulBuild.number
 print buildNumber
   }
   
 stage ("Last Build")
   {
+    echo "lastbuild"
   def lastbuild =  = Jenkins.instance.getItem('getBuildNumber').lastBuild.number
 print lastbuild
     
