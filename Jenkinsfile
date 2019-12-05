@@ -16,7 +16,7 @@ print buildNumber
 stage ("Last Build")
   {
     echo "lastbuild"
-  def lastbuild =  = Jenkins.instance.getItem('getBuildNumber').lastBuild.number
+  def lastbuild =  Jenkins.instance.getItem('getBuildNumber').lastBuild.number
 print lastbuild
     
      }
