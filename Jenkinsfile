@@ -38,15 +38,17 @@ stage ("Invoke Pipeline")
     build job: 'getBuildNumber', parameters: [
                 string(name: 'variable1', value: "from Pipeline") ]
   }
-      post {
-    success {
-     echo "done"
-    }
-        failure {
-          echo "failed"
+}
+stage ("check")
+{
+  def lb = Jenkins.instance.getItem('getBuildNumber').lastBuild.number
+  def lb1 = lb+1
+  print lb1
+  def sbn = Jenkins.instance.getItem('getBuildNumber').lastSuccessfulBuild.number
+  print sbn
+  if ( lb1 == sbn)
+  {
+  print "Successfully invoked"
   }
-  }
-
   
-
 }
