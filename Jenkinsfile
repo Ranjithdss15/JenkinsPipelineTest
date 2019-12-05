@@ -11,7 +11,7 @@ stage ("local")
 def buildNumber = Jenkins.instance.getItem('getBuildNumber').lastSuccessfulBuild.number
 print buildNumber
   }
-}
+
 stage("url")
 {
 httpRequest url: 'https://35.168.32.83:8080/job/Build/api/json', outputFile: 'output.json'
@@ -21,3 +21,4 @@ latestBuildNumber = "${data.lastSuccessfulBuild.number}"
 print latestBuildNumber
 }
 
+}
