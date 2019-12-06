@@ -1,6 +1,6 @@
 
 node('master') {
-
+       stages {
 		stage ("Invoke Pipeline")
 		  {
 
@@ -10,12 +10,13 @@ node('master') {
 		   
 }
 
- post{
+ post            {
 		    	failure {
 			script {
 			echo "Somke test Failed"
 			}}
 		  }
+	}
 		  
 /*
 
@@ -40,3 +41,4 @@ node('master') {
 
 		  }
 }
+*/
