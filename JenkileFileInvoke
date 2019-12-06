@@ -8,13 +8,15 @@ node('master') {
 		    build job: 'getBuildNumber', parameters: [string(name: 'variable1', value: "from Pipeline") ]
 		    
 		   
-
 }
+
  post{
 		    	failure {
+			script {
 			echo "Somke test Failed"
-			}
+			}}
 		  }
+		  
 /*
 
 		stage ("check")
