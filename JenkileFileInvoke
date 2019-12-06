@@ -15,15 +15,16 @@ node('master') {
 		  def lastSuccessfulBuild = Jenkins.instance.getItem('getBuildNumber').lastSuccessfulBuild.number
 		print lastBuild
 		print lastSuccessfulBuild
-		
-		
-		}
-		
 		if ( lastBuild != lastSuccessfulBuild) {
 			echo "Smoke Test Failed"
 			  currentBuild.result = 'FAILURE'
+			  sh 'exit 1'
 			
 		}
+		
+		}
+		
+		
 		stage ("Invoke Pipeline nxt")
 		  {
 	
