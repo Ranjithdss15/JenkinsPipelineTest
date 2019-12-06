@@ -36,10 +36,11 @@ agent any
 		}
 		
 		*/
-		stage ("Invoke Pipeline")
+		stage ("Invoke Pipeline nxt")
 		  {
+		  steps {
 		    echo "Running Next Stage"
-
+			}
 		  }
 		  }
 }
