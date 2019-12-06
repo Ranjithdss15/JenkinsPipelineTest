@@ -7,6 +7,7 @@ agent any
 		    echo "Invoke Pipeline"
 		    build job: 'getBuildNumber', parameters: [string(name: 'variable1', value: "from Pipeline")  ]
 		    }
+			}
 		   
 
 
@@ -28,6 +29,7 @@ agent any
 		}
 			}
 		  }
+	}
 	}
 	
 /*
@@ -54,5 +56,4 @@ agent any
 			}
 		  }
 		  }
-}
 }
