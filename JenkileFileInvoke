@@ -1,0 +1,34 @@
+
+node('master') {
+
+    stage ("Invoke Pipeline")
+      {
+
+        echo "Invoke Pipeline"
+        build job: 'getBuildNumber', parameters: [string(name: 'variable1', value: "from Pipeline") ]
+      }
+
+    stage ("check")
+    {
+      def lastBuild = Jenkins.instance.getItem('getBuildNumber').lastBuild.number
+
+      def lastSuccessfulBuild = Jenkins.instance.getItem('getBuildNumber').lastSuccessfulBuild.number
+
+        when {
+        expression {
+            return {lastBuild != lastSuccessfulBuild}
+            }
+        }
+      steps {
+                    echo 'Smoke Test Failed'
+
+                }
+
+    }
+    stage ("Invoke Pipeline")
+      {
+
+        echo "Running Next Stage"
+
+      }
+  }
