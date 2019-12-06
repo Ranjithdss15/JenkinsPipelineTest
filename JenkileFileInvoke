@@ -9,7 +9,7 @@ node('master') {
 		    if( jresult == 'FAILURE') {
 		    	currentBuild = Jenkins.instance.getItem('getBuildNumber').lastBuild.number
 		   	println "Smoke Job is  failed Buildnumber: $currentBuild"
-		   	currentBuild.result = 'FAILURE'
+		   	
 		    	sh 'exit 1'
 		   }
 		   
