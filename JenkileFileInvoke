@@ -17,6 +17,7 @@ node('master') {
 		print lastSuccessfulBuild
 		if ( lastBuild == lastSuccessfulBuild) {
 			echo "Smoke Test Failed"
+			  currentBuild.result = 'FAILURE'
 			return
 		}
 		
