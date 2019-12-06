@@ -4,7 +4,7 @@ node('master') {
 		
 		    println "Invoke Pipeline"
         
-		    def previousBuild = curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565
+		    def previousBuild = sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
   
 		    println "Previous Buildnumber: $previousBuild"
         /*
