@@ -4,7 +4,12 @@ node('master') {
 		
 		    echo "Invoke Pipeline"
 		    build job: 'getBuildNumber', parameters: [string(name: 'variable1', value: "from Pipeline") ],  propagate: false
-		    }
+		   jresult= job.result
+		   if( jresult == 'FAILURE') {
+		   echo "from stage 1"
+		    currentBuild.result = 'FAILURE'
+		    sh 'exit 1'
+		   }
 			
 
 
