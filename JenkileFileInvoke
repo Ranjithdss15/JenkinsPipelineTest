@@ -34,7 +34,7 @@ node('master') {
 		}
 		}
 		
-		*/
+		
 		stage ("Invoke Pipeline")
 		  {
 		    echo "Running Next Stage"
