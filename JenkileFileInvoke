@@ -1,9 +1,7 @@
-pipeline{
-agent any
-       stages {
+node(master) {
 		stage ("Invoke Pipeline")
 		  {
-		steps {
+		
 		    echo "Invoke Pipeline"
 		    build job: 'getBuildNumber', parameters: [string(name: 'variable1', value: "from Pipeline")  ]
 		    }
@@ -11,29 +9,10 @@ agent any
 		   
 
 
- post            {
-		    	always {
-			script {
-		  def lastBuild = Jenkins.instance.getItem('getBuildNumber').lastBuild.number
-
-		  def lastSuccessfulBuild = Jenkins.instance.getItem('getBuildNumber').lastSuccessfulBuild.number
-		echo lastBuild
-		echo lastSuccessfulBuild
-		if ( lastBuild != lastSuccessfulBuild) {
-			echo "Smoke Test Failed"
-			return
-		}
-		else {
-		
-		echo "next"
-		
-			}
-		  }
-	}
-	}
-	}
 	
-/*
+	
+	
+
 
 		stage ("check")
 		{
@@ -49,12 +28,12 @@ agent any
 		}
 		}
 		
-		*/
+		
 		stage ("Invoke Pipeline nxt")
 		  {
 		  steps {
 		    echo "Running Next Stage"
 			}
 		  }
-		  }
+		  
 }
