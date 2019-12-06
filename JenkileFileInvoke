@@ -3,13 +3,18 @@ node('master') {
 		  {
 		
 		    echo "Invoke Pipeline"
+		    def previousBuild = Jenkins.instance.getItem('getBuildNumber').lastBuild.number
+		    echo previousBuild
 		jresult =    build ( job: 'getBuildNumber', parameters: [string(name: 'variable1', value: "from Pipeline") ],  propagate: false).result
 		 
 		   if( jresult == 'FAILURE') {
-		   echo "from stage 1"
+		   echo "Smoke Failed"
+		   currentBuild = Jenkins.instance.getItem('getBuildNumber').lastBuild.number
+		   echo "$currentBuild failed"
 		    currentBuild.result = 'FAILURE'
 		    sh 'exit 1'
 		   }
+		   
 		   }
 			
 
