@@ -7,6 +7,8 @@ node('master') {
 		    def previousBuild = sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
   		    def lastsuccesfullbuild ' def previousBuild = sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastSuccessfulBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
 		    println "Previous Buildnumber: $previousBuild"
+		    println "last Buildnumber: $lastsuccesfullbuild"
+		    
         /*
 		    jresult =    build ( job: 'getBuildNumber', parameters: [string(name: 'variable1', value: "from Pipeline"),string(name: 'variable2', value: "from var2") ],  propagate: false).result
 		    if( jresult == 'FAILURE') {
