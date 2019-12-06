@@ -3,7 +3,7 @@ node('master') {
 		  {
 		
 		    echo "Invoke Pipeline"
-		    build job: 'getBuildNumber', parameters: [string(name: 'variable1', value: "from Pipeline")  ]
+		    build job: 'getBuildNumber', parameters: [string(name: 'variable1', value: "from Pipeline"),  propogate: false ]
 		    }
 			
 
@@ -25,9 +25,9 @@ node('master') {
 		
 		stage ("Invoke Pipeline nxt")
 		  {
-		  steps {
+	
 		    echo "Running Next Stage"
-			}
+			
 		  }
 		  
 }
