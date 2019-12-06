@@ -18,8 +18,7 @@ agent any
 			}}
 		  }
 	}
-	}
-}	  
+	
 /*
 
 		stage ("check")
@@ -42,5 +41,7 @@ agent any
 		    echo "Running Next Stage"
 
 		  }
+		  }
 }
+	  
 
