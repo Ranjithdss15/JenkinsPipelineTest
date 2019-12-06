@@ -7,13 +7,14 @@ node('master') {
 		    echo "Invoke Pipeline"
 		    build job: 'getBuildNumber', parameters: [string(name: 'variable1', value: "from Pipeline") ]
 		    
-		    post{
+		   
+
+}
+ post{
 		    	failure {
 			echo "Somke test Failed"
 			}
 		  }
-
-}
 /*
 
 		stage ("check")
