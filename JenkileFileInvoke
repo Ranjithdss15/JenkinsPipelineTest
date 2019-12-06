@@ -1,5 +1,6 @@
 
-node('master') {
+pipeline{
+agent any
        stages {
 		stage ("Invoke Pipeline")
 		  {
