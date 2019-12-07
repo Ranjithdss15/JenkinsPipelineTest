@@ -24,7 +24,7 @@ node('master') {
 		//println("currentBuild = ${currentBuildTest}")
 		//println("getSucccessfulBuild = ${getSucccessfulBuild}")
 	  	//println("getFailedBuild = ${getFailedBuild}")
-		if(currentBuildTest == getSucccessfulBuild) {
+		if(currentBuild == getSucccessfulBuild) {
 			print "inside if"
 			println("currentBuildTest = ${currentBuildTest}")
 			println("getSucccessfulBuild = ${getSucccessfulBuild}")
@@ -32,7 +32,7 @@ node('master') {
 			print "Smoke Test Passed"
 			break
 			}
-		else if (currentBuildTest == getFailedBuild)
+		else if (currentBuild == getFailedBuild)
 		{
 			print "inside else"
 			println("currentBuildTest = ${currentBuildTest}")
