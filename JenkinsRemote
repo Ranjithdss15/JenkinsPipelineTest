@@ -33,6 +33,7 @@ node('master') {
 			println("getSucccessfulBuild = ${getSucccessfulBuild}")
 			println("getFailedBuild = ${getFailedBuild}")
 			print "Smoke Test Passed"
+			break
 			}
 		else if (currentBuildTest == getFailedBuild)
 		{
