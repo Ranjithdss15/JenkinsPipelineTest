@@ -12,7 +12,7 @@ node('master') {
 		def currentBuildTest = previousBuild + 1
 		println("currentBuildTest = ${currentBuildTest}")
 		//trigerring Job
-	   	sh  "curl -X POST http://${jenkinsURL}/job/{jobName}/buildWithParameters?variable1=asd,variable2=das --user ${user}:${jenkinsToken}"
+	   	sh  "curl -X POST http://${jenkinsURL}/job/${jobName}/buildWithParameters?variable1=asd,variable2=das --user ${user}:${jenkinsToken}"
 	    
 	        echo "Running Next Stage"
 	        def currentBuild = sh(script: "curl -s http://35.168.32.83:8080/job/${jobName}/lastBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
