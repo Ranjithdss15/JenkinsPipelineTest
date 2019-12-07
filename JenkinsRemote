@@ -7,8 +7,8 @@ node('master') {
 		def user = "admin"
 		def jenkinsToken = "11913b5a828895141297ffbb5fca801565"
 		def variable1 = "testVar1"
-		def variable2 = "testVar2"
-		def variable3 = ""
+		def variable2 = ""
+		def variable3 = "fromvariable3"
 
 		def previousBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
 		println("previousBuildNumber = ${previousBuild}")
