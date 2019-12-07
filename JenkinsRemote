@@ -14,7 +14,7 @@ node('master') {
 		def currentBuild = previousBuild + 1
 		println("currentBuildNumber = ${currentBuild}")
 		//trigerring Job
-	   	sh  "curl -X POST http://${jenkinsURL}/job/${jobName}/buildWithParameters?variable1=${variable1},variable2=${variable2} --user ${user}:${jenkinsToken}"
+	   	sh  "curl -X POST http://${jenkinsURL}/job/${jobName}/buildWithParameters?variable1=${variable1}&variable2=${variable2} --user ${user}:${jenkinsToken}"
 			
 
 	while (true)
