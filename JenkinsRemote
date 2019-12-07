@@ -17,6 +17,7 @@ node('master') {
 		println "Smoke Job is  failed Buildnumber: $currentBuild"
 		sh 'exit 1'
    		}
+	}
 
 	stage ("Invoke Pipeline nxt")
 	  {
