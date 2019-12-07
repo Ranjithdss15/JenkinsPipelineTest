@@ -9,7 +9,7 @@ node('master') {
 		println("previousBuild = ${previousBuild}")
 		def currentBuildTest = previousBuild + 1
 		println("currentBuildTest = ${currentBuildTest}")
-
+		//trigerring Job
 	   	sh  "curl -X POST http://35.168.32.83:8080/job/getBuildNumber/buildWithParameters?variable1=asd,variable2=das --user admin:11913b5a828895141297ffbb5fca801565"
 	    
 	        echo "Running Next Stage"
@@ -27,17 +27,29 @@ node('master') {
 		println("currentBuildTest = ${currentBuildTest}")
 		println("getSucccessfulBuild = ${getSucccessfulBuild}")
 	  	println("getFailedBuild = ${getFailedBuild}")
-		if(currentBuildTest == getSucccessfulBuild || currentBuildTest == getFailedBuild) {
+		if(currentBuildTest == getSucccessfulBuild) {
 			print "inside if"
 			println("currentBuildTest = ${currentBuildTest}")
 			println("getSucccessfulBuild = ${getSucccessfulBuild}")
 			println("getFailedBuild = ${getFailedBuild}")
-				break
-			
+			print "Smoke Test Passed"
+			}
+		else if (currentBuildTest == getFailedBuild)
+		{
+			print "inside else"
+			println("currentBuildTest = ${currentBuildTest}")
+			println("getSucccessfulBuild = ${getSucccessfulBuild}")
+			println("getFailedBuild = ${getFailedBuild}")
+			print "Smoke Test Failed"
+			sh 'exit 1'
 		}
+		
 	}
 
 
+	}
+	stage ("Next Stage") {
+	print "Inside Next Stage"
 	}
 		  
 }
