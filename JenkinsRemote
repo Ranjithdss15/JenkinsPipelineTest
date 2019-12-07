@@ -8,6 +8,12 @@ node('master') {
 	    def previousBuild = sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
 	    println "Previous Buildnumber: $previousBuild"
 	    sh  "curl -X POST http://35.168.32.83:8080/job/getBuildNumber/buildWithParameters?variable1=asd,variable2=das --user admin:11913b5a828895141297ffbb5fca801565"
+	    
+	}
+
+	stage ("Invoke Pipeline nxt")
+	  {
+	    echo "Running Next Stage"
 	    def currentBuild = sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
 	    def lastsuccesfullbuild =   sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastSuccessfulBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
 	    println "Current Buildnumber: $currentBuild"
@@ -17,11 +23,6 @@ node('master') {
 		println "Smoke Job is  failed Buildnumber: $currentBuild"
 		sh 'exit 1'
    		}
-	}
-
-	stage ("Invoke Pipeline nxt")
-	  {
-	    echo "Running Next Stage"
 	  }
 		  
 }
