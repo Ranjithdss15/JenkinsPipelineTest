@@ -7,7 +7,7 @@ node('master') {
 		def user = "admin"
 		def jenkinsToken = "11913b5a828895141297ffbb5fca801565"
 
-		def previousBuild = sh(script: "curl -s http://${jenkinsURL}/job/{jobName}/lastBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
+		def previousBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
 		println("previousBuild = ${previousBuild}")
 		def currentBuildTest = previousBuild + 1
 		println("currentBuildTest = ${currentBuildTest}")
@@ -15,8 +15,8 @@ node('master') {
 	   	sh  "curl -X POST http://${jenkinsURL}/job/{jobName}/buildWithParameters?variable1=asd,variable2=das --user ${user}:${jenkinsToken}"
 	    
 	        echo "Running Next Stage"
-	        def currentBuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
-	        def lastsuccesfullbuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastSuccessfulBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
+	        def currentBuild = sh(script: "curl -s http://35.168.32.83:8080/job/${jobName}/lastBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
+	        def lastsuccesfullbuild = sh(script: "curl -s http://35.168.32.83:8080/job/${jobName}/lastSuccessfulBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
 	        println("currentBuild = ${currentBuild}")
        	        println("lastsuccesfullbuild = ${lastsuccesfullbuild}")
 
@@ -24,8 +24,8 @@ node('master') {
 
 	while (true)
 	{
-		def getSucccessfulBuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastSuccessfulBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
-		def getFailedBuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastFailedBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
+		def getSucccessfulBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastSuccessfulBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
+		def getFailedBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastFailedBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
 		println("currentBuildTest = ${currentBuildTest}")
 		println("getSucccessfulBuild = ${getSucccessfulBuild}")
 	  	println("getFailedBuild = ${getFailedBuild}")
