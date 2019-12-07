@@ -20,7 +20,7 @@ node('master') {
 
 
 
-	while (currentBuildTest > 0)
+	while (true)
 	{
 	print "inside while"
 	}
