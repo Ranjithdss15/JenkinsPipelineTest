@@ -18,22 +18,19 @@ node('master') {
 	  println("currentBuild = ${currentBuild}")
 	  println("lastsuccesfullbuild = ${lastsuccesfullbuild}")
 
-
+	
 
 	while (true)
 	{
-	print "inside while"
+		getSucccessfulBuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastSuccessfulBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
+		getFailedBuild = def lastsuccesfullbuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastFailedBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
+		println("getSucccessfulBuild = ${getSucccessfulBuild}")
+	  	println("getFailedBuild = ${getFailedBuild}")
+		if(currentBuildTest = getSucccessfulBuild ||  getFailedBuild) {
+		print "inside if"
 	}
 
 
 
-	    if( currentBuild != lastsuccesfullbuild) {
-		println "Smoke Job is  failed Buildnumber: $currentBuild"
-		sh 'exit 1'
-   		}
-		else {
-		println "Smoke Job Passed"
-		}
-	  }
 		  
 }
