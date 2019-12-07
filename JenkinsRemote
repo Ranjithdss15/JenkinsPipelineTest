@@ -10,27 +10,20 @@ node('master') {
 		def variable2 = "testVar2"
 
 		def previousBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
-		println("previousBuild = ${previousBuild}")
-		def currentBuildTest = previousBuild + 1
-		println("currentBuildTest = ${currentBuildTest}")
+		println("previousBuildNumber = ${previousBuild}")
+		def currentBuild = previousBuild + 1
+		println("currentBuildNumber = ${currentBuild}")
 		//trigerring Job
 	   	sh  "curl -X POST http://${jenkinsURL}/job/${jobName}/buildWithParameters?variable1=${variable1},variable2=${variable2} --user ${user}:${jenkinsToken}"
-	    
-	        echo "Running Next Stage"
-	        def currentBuild = sh(script: "curl -s http://35.168.32.83:8080/job/${jobName}/lastBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
-	        def lastsuccesfullbuild = sh(script: "curl -s http://35.168.32.83:8080/job/${jobName}/lastSuccessfulBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
-	        println("currentBuild = ${currentBuild}")
-       	        println("lastsuccesfullbuild = ${lastsuccesfullbuild}")
-
-	
+			
 
 	while (true)
 	{
 		def getSucccessfulBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastSuccessfulBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
 		def getFailedBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastFailedBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
-		println("currentBuildTest = ${currentBuildTest}")
-		println("getSucccessfulBuild = ${getSucccessfulBuild}")
-	  	println("getFailedBuild = ${getFailedBuild}")
+		//println("currentBuild = ${currentBuildTest}")
+		//println("getSucccessfulBuild = ${getSucccessfulBuild}")
+	  	//println("getFailedBuild = ${getFailedBuild}")
 		if(currentBuildTest == getSucccessfulBuild) {
 			print "inside if"
 			println("currentBuildTest = ${currentBuildTest}")
