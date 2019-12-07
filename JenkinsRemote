@@ -29,6 +29,7 @@ node('master') {
 	  	println("getFailedBuild = ${getFailedBuild}")
 		if(currentBuildTest == getSucccessfulBuild ||  getFailedBuild) {
 			print "inside if"
+			break
 			
 		}
 	}
