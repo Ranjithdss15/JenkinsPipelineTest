@@ -25,6 +25,9 @@ node('master') {
 		println "Smoke Job is  failed Buildnumber: $currentBuild"
 		sh 'exit 1'
    		}
+		else {
+		println "Smoke Job Passed"
+		}
 	  }
 		  
 }
