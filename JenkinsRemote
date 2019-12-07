@@ -6,8 +6,9 @@ node('master') {
 	    println "Invoke Pipeline"
 
 	    previousBuild = sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
-	 	def disk_size = sh(script: "df / --output=avail | tail -1", returnStdout: true).trim() as Integer
-		println("disk_size = ${disk_size}")
+	 //	def disk_size = sh(script: "df / --output=avail | tail -1", returnStdout: true).trim() as Integer
+		def disk_size = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
+		println("Build = ${disk_size}")
 	 //println "Previous Buildnumber: $previousBuild"
 	  //  print $previousBuild
 	//    echo  ${previousBuild}
