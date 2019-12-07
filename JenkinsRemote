@@ -10,15 +10,16 @@ node('master') {
 
 	    sh  "curl -X POST http://35.168.32.83:8080/job/getBuildNumber/buildWithParameters?variable1=asd,variable2=das --user admin:11913b5a828895141297ffbb5fca801565"
 	    
-	}
-
-	stage ("Invoke Pipeline nxt")
-	  {
 	    echo "Running Next Stage"
 	    def currentBuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
 	   def lastsuccesfullbuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastSuccessfulBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
 	  println("currentBuild = ${currentBuild}")
 	  println("lastsuccesfullbuild = ${lastsuccesfullbuild}")
+
+
+
+
+
 
 
 	    if( currentBuild != lastsuccesfullbuild) {
