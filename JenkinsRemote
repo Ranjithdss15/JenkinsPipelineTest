@@ -3,20 +3,20 @@ node('master') {
 	stage ("Invoke Pipeline")
 	  {
 
-	    println "Invoke Pipeline"
+	   	println "Invoke Pipeline"
 
 		def previousBuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
 		println("previousBuild = ${previousBuild}")
 		def currentBuildTest = previousBuild + 1
 		println("currentBuildTest = ${currentBuildTest}")
 
-	    sh  "curl -X POST http://35.168.32.83:8080/job/getBuildNumber/buildWithParameters?variable1=asd,variable2=das --user admin:11913b5a828895141297ffbb5fca801565"
+	   	sh  "curl -X POST http://35.168.32.83:8080/job/getBuildNumber/buildWithParameters?variable1=asd,variable2=das --user admin:11913b5a828895141297ffbb5fca801565"
 	    
-	    echo "Running Next Stage"
-	    def currentBuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
-	   def lastsuccesfullbuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastSuccessfulBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
-	  println("currentBuild = ${currentBuild}")
-	  println("lastsuccesfullbuild = ${lastsuccesfullbuild}")
+	        echo "Running Next Stage"
+	        def currentBuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
+	        def lastsuccesfullbuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastSuccessfulBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
+	        println("currentBuild = ${currentBuild}")
+       	        println("lastsuccesfullbuild = ${lastsuccesfullbuild}")
 
 	
 
@@ -28,10 +28,11 @@ node('master') {
 	  	println("getFailedBuild = ${getFailedBuild}")
 		if(currentBuildTest == getSucccessfulBuild ||  getFailedBuild) {
 			print "inside if"
+			break
 		}
 	}
 
 
-
+	}
 		  
 }
