@@ -8,7 +8,7 @@ node('master') {
 	    previousBuild = sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
 	    //println "Previous Buildnumber: $previousBuild"
 	  //  print $previousBuild
-	    echo  ${previousBuild}
+	//    echo  ${previousBuild}
 	    sh  "curl -X POST http://35.168.32.83:8080/job/getBuildNumber/buildWithParameters?variable1=asd,variable2=das --user admin:11913b5a828895141297ffbb5fca801565"
 	    
 	}
