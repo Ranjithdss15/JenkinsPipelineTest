@@ -22,8 +22,8 @@ node('master') {
 
 	while (true)
 	{
-		getSucccessfulBuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastSuccessfulBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
-		getFailedBuild = def lastsuccesfullbuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastFailedBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
+		def getSucccessfulBuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastSuccessfulBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
+		def getFailedBuild = sh(script: "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastFailedBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true).trim() as Integer
 		println("getSucccessfulBuild = ${getSucccessfulBuild}")
 	  	println("getFailedBuild = ${getFailedBuild}")
 		if(currentBuildTest = getSucccessfulBuild ||  getFailedBuild) {
