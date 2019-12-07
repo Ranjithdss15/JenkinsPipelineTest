@@ -1,32 +1,26 @@
 node('master') {
-		stage ("Invoke Pipeline")
-		  {
-		
-		    println "Invoke Pipeline"
-        
-		    def previousBuild = sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
-  		 
-		    sh  "curl -X POST http://35.168.32.83:8080/job/getBuildNumber/buildWithParameters?variable1=asd,variable2=das --user admin:11913b5a828895141297ffbb5fca801565"
-		//    def previousBuild = sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
-		    def lastsuccesfullbuild =   sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastSuccessfulBuild --user admin:11913b5a828895141297ffbb5fca801565"
-		    println "Previous Buildnumber: $previousBuild"
-		    //println "last Buildnumber: $lastsuccesfullbuild"
-		    
-        /*
-		    jresult =    build ( job: 'getBuildNumber', parameters: [string(name: 'variable1', value: "from Pipeline"),string(name: 'variable2', value: "from var2") ],  propagate: false).result
-		    if( jresult == 'FAILURE') {
-		    	currentBuild = Jenkins.instance.getItem('getBuildNumber').lastBuild.number
-		   	println "Smoke Job is  failed Buildnumber: $currentBuild"
-		    	sh 'exit 1'
-		   }
-		   */
-		   }
 
-		stage ("Invoke Pipeline nxt")
-		  {
-	
-		    echo "Running Next Stage"
-			
-		  }
+	stage ("Invoke Pipeline")
+	  {
+
+	    println "Invoke Pipeline"
+
+	    def previousBuild = sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
+	    println "Previous Buildnumber: $previousBuild"
+	    sh  "curl -X POST http://35.168.32.83:8080/job/getBuildNumber/buildWithParameters?variable1=asd,variable2=das --user admin:11913b5a828895141297ffbb5fca801565"
+	    def currentBuild = sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
+	    def lastsuccesfullbuild =   sh "curl -s http://35.168.32.83:8080/job/getBuildNumber/lastSuccessfulBuild/buildNumber --user admin:11913b5a828895141297ffbb5fca801565"
+	    println "Current Buildnumber: $currentBuild"
+	    println "last Buildnumber: $lastsuccesfullbuild"
+
+	    if( currentBuild != lastsuccesfullbuild) {
+		println "Smoke Job is  failed Buildnumber: $currentBuild"
+		sh 'exit 1'
+   		}
+
+	stage ("Invoke Pipeline nxt")
+	  {
+	    echo "Running Next Stage"
+	  }
 		  
 }
