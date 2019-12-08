@@ -6,16 +6,15 @@ node('master') {
 		def jobName = "getBuildNumber"
 		def user = "admin"
 		def jenkinsToken = "11913b5a828895141297ffbb5fca801565"
-		def variable1 = "testVar1"
-		def variable2 = "test2"
-		def variable3 = "fromvariable3"
+		def ENVIRONMENT = env.ENVIRONMENT
+		def SMOKE_SERVER = env.SMOKE_SERVER
 
 		def previousBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
 		println("previousBuildNumber = ${previousBuild}")
 		def currentBuild = previousBuild + 1
 		println("currentBuildNumber = ${currentBuild}")
 		//trigerring Job
-	   	sh  "curl -X POST http://${jenkinsURL}/job/${jobName}/buildWithParameters?'variable1=${variable1}&variable_2=${variable2}&variable3=${variable3}' --user ${user}:${jenkinsToken}"
+	   	sh  "curl -X POST http://${jenkinsURL}/job/${jobName}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENT}&SMOKE_SERVER=${SMOKE_SERVER}' --user ${user}:${jenkinsToken}"
 			
 
 	while (true)
