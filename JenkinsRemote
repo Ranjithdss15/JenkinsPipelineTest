@@ -24,14 +24,15 @@ node('master') {
 		def getFailedBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastFailedBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
 		def getCompletedBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastCompletedBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
 		def getUnsuccessfulBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastUnsuccessfulBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
+		def getStableBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastStableBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
 		//println("currentBuild = ${currentBuild}")
 		//println("getSuccessfulBuild = ${getSuccessfulBuild}")
 	  	//println("getFailedBuild = ${getFailedBuild}")
 		if (currentBuild == getCompletedBuild)	{
-			if(currentBuild == getSuccessfulBuild) {
+			if(currentBuild == getStableBuild) {
 				print "inside if"
 				println("currentBuild = ${currentBuild}")
-				println("SuccessfulBuild = ${getSuccessfulBuild}")
+				println("StableBuild = ${getStableBuild}")
 				println("lastFailedBuild = ${getFailedBuild}")
 				print "Smoke Test Passed"
 				break
