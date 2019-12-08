@@ -22,25 +22,37 @@ node('master') {
 	{
 		def getSucccessfulBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastSuccessfulBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
 		def getFailedBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastFailedBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
+		def getCompletedBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastCompletedBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
+		def getUnsuccessfulBuild = sh(script: "curl -s http://${jenkinsURL}/job/${jobName}/lastSuccessfulBuild/buildNumber --user ${user}:${jenkinsToken}", returnStdout: true).trim() as Integer
 		//println("currentBuild = ${currentBuild}")
 		//println("getSucccessfulBuild = ${getSucccessfulBuild}")
 	  	//println("getFailedBuild = ${getFailedBuild}")
-		if(currentBuild == getSucccessfulBuild) {
-			print "inside if"
-			println("currentBuild = ${currentBuild}")
-			println("lastSucccessfulBuild = ${getSucccessfulBuild}")
-			println("lastFailedBuild = ${getFailedBuild}")
-			print "Smoke Test Passed"
-			break
+		if (currentBuild == getCompletedBuild)	{
+			if(currentBuild == getSucccessfulBuild) {
+				print "inside if"
+				println("currentBuild = ${currentBuild}")
+				println("lastSucccessfulBuild = ${getSucccessfulBuild}")
+				println("lastFailedBuild = ${getFailedBuild}")
+				print "Smoke Test Passed"
+				break
+				}
+			else if (currentBuild == getFailedBuild)
+			{
+				print "inside else"
+				println("currentBuild = ${currentBuild}")
+				println("lastSucccessfulBuild = ${getSucccessfulBuild}")
+				println("lastFailedBuild = ${getFailedBuild}")
+				print "Smoke Test Failed"
+				sh 'exit 1'
 			}
-		else if (currentBuild == getFailedBuild)
-		{
-			print "inside else"
-			println("currentBuild = ${currentBuild}")
-			println("lastSucccessfulBuild = ${getSucccessfulBuild}")
-			println("lastFailedBuild = ${getFailedBuild}")
-			print "Smoke Test Failed"
-			sh 'exit 1'
+			else if(currentBuild == getUnsucccessfulBuild ) {
+				print "inside if"
+				println("currentBuild = ${currentBuild}")
+				println("UnsuccessfulBuild = ${getUnsuccessfulBuild}")
+				println("lastFailedBuild = ${getFailedBuild}")
+				print "Smoke Test is Aborted"
+				sh 'exit 1'
+				}
 		}
 		
 	}
