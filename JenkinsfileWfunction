@@ -1,4 +1,4 @@
-def invokeSmoke() {
+def invokeSmoke(ENVIRONMENT,SMOKE_SERVER) {
 
         def jenkinsURL = "35.168.32.83:8080"
         def jobName = "getBuildNumber"
