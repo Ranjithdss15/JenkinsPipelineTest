@@ -51,7 +51,7 @@ node('master') {
 				println("currentBuild = ${currentBuild}")
 				println("UnsuccessfulBuild = ${getUnsuccessfulBuild}")
 				println("lastFailedBuild = ${getFailedBuild}")
-				print "Smoke Test is Aborted"
+				print "Smoke Test is Unstable or Aborted"
 				sh 'exit 1'
 				}
 		}
