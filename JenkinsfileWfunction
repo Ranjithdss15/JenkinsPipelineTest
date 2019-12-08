@@ -63,7 +63,7 @@ node('master') {
 	  	{
 		def ENVIRONMENT2 = env.ENVIRONMENT2
 		def SMOKE_SERVER2 = env.SMOKE_SERVER
-		invokeSmoke(ENVIRONMENT1,SMOKE_SERVER)
+		invokeSmoke(ENVIRONMENT2,SMOKE_SERVER)
 		}
 	stage ("Next Stage") {
 		print "Inside Next Stage"
