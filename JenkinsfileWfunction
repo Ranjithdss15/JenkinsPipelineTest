@@ -1,13 +1,11 @@
-node('master') {
+def invokeSmoke() {
 
-	stage ("Invoke Pipeline")
-	  {
         def jenkinsURL = "35.168.32.83:8080"
         def jobName = "getBuildNumber"
         def user = "admin"
         def jenkinsToken = "11913b5a828895141297ffbb5fca801565"
-        def ENVIRONMENT = env.ENVIRONMENT
-        def SMOKE_SERVER = env.SMOKE_SERVER
+        def ENVIRONMENT = ENVIRONMENT
+        def SMOKE_SERVER = SMOKE_SERVER
         def urlPrefix = "http://${jenkinsURL}/job/${jobName}"
         def auth = "--user ${user}:$jenkinsToken"
 
@@ -41,8 +39,22 @@ node('master') {
           }
 		
 	}
+}
 
+
+
+node('master') {
+	
+	stage ("Stage L3") {
+	print "Inside Next Stage"
 	}
+
+	stage ("Invoke Smoke Pipeline")
+	  	{
+		def ENVIRONMENT1 = env.ENVIRONMENT
+		def SMOKE_SERVER1 = env.SMOKE_SERVER
+		invokeSmoke(ENVIRONMENT1,SMOKE_SERVER)
+		}
 	stage ("Next Stage") {
 	print "Inside Next Stage"
 	}
