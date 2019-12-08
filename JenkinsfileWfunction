@@ -49,14 +49,24 @@ node('master') {
 	print "Inside Next Stage"
 	}
 
-	stage ("Invoke Smoke Pipeline")
+	stage ("Invoke in Smoke Environment")
 	  	{
-		def ENVIRONMENT1 = env.ENVIRONMENT
+		def ENVIRONMENT1 = env.ENVIRONMENT1
 		def SMOKE_SERVER1 = env.SMOKE_SERVER
 		invokeSmoke(ENVIRONMENT1,SMOKE_SERVER)
 		}
 	stage ("Next Stage") {
-	print "Inside Next Stage"
-	}
+		print "Inside Next Stage"
+		}
+		
+	stage ("Invoke Smoke in L2 Environment")
+	  	{
+		def ENVIRONMENT2 = env.ENVIRONMENT2
+		def SMOKE_SERVER2 = env.SMOKE_SERVER
+		invokeSmoke(ENVIRONMENT1,SMOKE_SERVER)
+		}
+	stage ("Next Stage") {
+		print "Inside Next Stage"
+		}		
 		  
 }
