@@ -1,17 +1,17 @@
 import groovy.json.JsonSlurper
 def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
-            def jenkinsURL = "35.168.32.83:8080"
-            def jobName = "getBuildNumber"
-            def user = "admin"
-            def jenkinsToken = "11913b5a828895141297ffbb5fca801565"
-            def ENVIRONMENT = env.ENVIRONMENT
-            def SMOKE_SERVER = env.SMOKE_SERVER
-            def urlPrefix = "http://${jenkinsURL}/job/${jobName}"
-            def auth = "--user ${user}:$jenkinsToken"
+            jenkinsURL = "35.168.32.83:8080"
+            jobName = "getBuildNumber"
+            user = "admin"
+            jenkinsToken = "11913b5a828895141297ffbb5fca801565"
+             ENVIRONMENT = env.ENVIRONMENT
+             SMOKE_SERVER = env.SMOKE_SERVER
+             urlPrefix = "http://${jenkinsURL}/job/${jobName}"
+             auth = "--user ${user}:$jenkinsToken"
 
-            def previousBuild = sh(script: "curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}", returnStdout: true).trim() as Integer
+             previousBuild = sh(script: "curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}", returnStdout: true).trim() as Integer
             println("previousBuildNumber = ${previousBuild}")
-            def currentBuild = previousBuild + 1
+             currentBuild = previousBuild + 1
 	    //def currentBuildString = sh ("${currentBuild}").trim() as String
 	    //println("surrent String : ${currentBuildString}")
             println("currentBuildNumber = ${currentBuild}")
@@ -25,9 +25,9 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
 
             println("currentBuildNumber = ${currentBuild}")
 	    
-		def currentBuildJson =sh(script: "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true)
+		 currentBuildJson =sh(script: "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true)
 		Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
-		def status = jsonContent.get("result")
+		 status = jsonContent.get("result")
 		println("Status = ${status}")
                   
 		if(status == "SUCCESS") {
@@ -61,8 +61,8 @@ node('master') {
 
 	stage ("Invoke in Smoke Environment")
 	  	{
-		def ENVIRONMENT1 = env.ENVIRONMENT1
-		def SMOKE_SERVER1 = env.SMOKE_SERVER
+		 ENVIRONMENT1 = env.ENVIRONMENT1
+		 SMOKE_SERVER1 = env.SMOKE_SERVER
 		invokeSmoke(ENVIRONMENT1,SMOKE_SERVER)
 		}
 	stage ("Next Stage") {
@@ -71,8 +71,8 @@ node('master') {
 		
 	stage ("Invoke Smoke in L2 Environment")
 	  	{
-		def ENVIRONMENT2 = env.ENVIRONMENT2
-		def SMOKE_SERVER2 = env.SMOKE_SERVER
+		 ENVIRONMENT2 = env.ENVIRONMENT2
+		 SMOKE_SERVER2 = env.SMOKE_SERVER
 		invokeSmoke(ENVIRONMENT2,SMOKE_SERVER)
 		}
 	stage ("Next Stage") {
