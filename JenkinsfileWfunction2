@@ -15,6 +15,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
             println("currentBuildNumber = ${currentBuild}")
             //trigerring Job
               sh  "curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam}' ${auth}"
+	      sleep 5
 
 
           while (true)
