@@ -26,9 +26,9 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
            // if (currentBuild == getCompletedBuild)	{
               def currentBuildJson =sh(script: "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true) //.trim() as Integer 
               Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
-              def status = JSON.stringify(jsonContent.get("result"))
+             // def status = jsonContent.get("result")
               println("Current Build Status = ${status}")
-
+		if(jsonContent.get("result")) {
                   if(status == "SUCCESS") {
                 print "Smoke Test Passed"
                 break
@@ -42,7 +42,9 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
                 print "Smoke Test Failed"
                 sh 'exit'
                 }
+		}
          //   }
+	 
 
           }
 
