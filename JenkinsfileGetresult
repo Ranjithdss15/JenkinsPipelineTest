@@ -7,8 +7,8 @@ node('master') {
     def previousBuild = sh(script: "curl -s 'http://35.168.32.83:8080/job/getBuildNumber/179/api/json?pretty=true&tree=result' --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true)
     //.trim() as Integer
 		println("previousBuildNumber = ${previousBuild}")
-		def status=previousBuild['result']
-		Map jsonContent = (Map) new JsonSlurper().parseText(status)
+		//def status=previousBuild['result']
+		Map jsonContent = (Map) new JsonSlurper().parseText(previousBuild)
 		def status2 = jsonContent.get("result")
 		println("Status = ${status2}")
     
