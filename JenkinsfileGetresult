@@ -7,3 +7,4 @@ node('master') {
 		println("previousBuildNumber = ${previousBuild}")
     
     }
+   }
