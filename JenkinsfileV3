@@ -13,7 +13,7 @@ node('master') {
 		def urlPrefix = "http://${jenkinsURL}/job/${jobName}"
 		def auth = "--user ${user}:$jenkinsToken"
 		
-		def previousBuild = sh(script: "curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}", returnStdout: true).trim() as Integer
+		def previousBuild = sh(script: "curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}", returnStdout: true) //.trim() as Integer
 		println("previousBuildNumber = ${previousBuild}")
 		def currentBuild = previousBuild + 1
 		println("currentBuildNumber = ${currentBuild}")
