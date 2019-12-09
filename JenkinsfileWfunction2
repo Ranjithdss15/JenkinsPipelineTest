@@ -34,7 +34,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
                 print "Smoke Test Passed"
                 break
                 }
-		else if ( status == null || status == "null") {
+		else if ( status == null ) {
 		echo "Still Building"
 		}
 
