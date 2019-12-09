@@ -1,0 +1,75 @@
+import groovy.json.JsonSlurper
+def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
+            def jenkinsURL = "35.168.32.83:8080"
+            def jobName = "getBuildNumber"
+            def user = "admin"
+            def jenkinsToken = "11913b5a828895141297ffbb5fca801565"
+            def ENVIRONMENT = env.ENVIRONMENT
+            def SMOKE_SERVER = env.SMOKE_SERVER
+            def urlPrefix = "http://${jenkinsURL}/job/${jobName}"
+            def auth = "--user ${user}:$jenkinsToken"
+
+            def previousBuild = sh(script: "curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}", returnStdout: true).trim() as Integer
+            println("previousBuildNumber = ${previousBuild}")
+            def currentBuild = previousBuild + 1
+            println("currentBuildNumber = ${currentBuild}")
+            //trigerring Job
+              sh  "curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam}' ${auth}"
+
+
+          while (true)
+          {
+            def getCompletedBuild = sh(script: "curl -s ${urlPrefix}/lastCompletedBuild/buildNumber ${auth}", returnStdout: true).trim() as Integer	
+                println("LastCompletedBuild = ${getCompletedBuild}")
+            println("currentBuildNumber = ${currentBuild}")
+            if (currentBuild == getCompletedBuild)	{
+              def currentBuildJson =sh(script: "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true) //.trim() as Integer 
+              Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
+              def status = jsonContent.get("result")
+              println("Current Build Status = ${status}")
+
+                  if(status == "SUCCESS") {
+                print "Smoke Test Passed"
+                break
+                }
+
+              else {
+
+                print "Smoke Test Failed"
+                sh 'exit 1'
+                }
+            }
+
+          }
+
+       }
+
+
+
+node('master') {
+	
+	stage ("Stage L3") {
+	print "Inside Next Stage"
+	}
+
+	stage ("Invoke in Smoke Environment")
+	  	{
+		def ENVIRONMENT1 = env.ENVIRONMENT1
+		def SMOKE_SERVER1 = env.SMOKE_SERVER
+		invokeSmoke(ENVIRONMENT1,SMOKE_SERVER)
+		}
+	stage ("Next Stage") {
+		print "Inside Next Stage"
+		}
+		
+	stage ("Invoke Smoke in L2 Environment")
+	  	{
+		def ENVIRONMENT2 = env.ENVIRONMENT2
+		def SMOKE_SERVER2 = env.SMOKE_SERVER
+		invokeSmoke(ENVIRONMENT2,SMOKE_SERVER)
+		}
+	stage ("Next Stage") {
+		print "Inside Next Stage"
+		}		
+		  
+}
