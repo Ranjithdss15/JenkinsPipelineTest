@@ -23,7 +23,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
 
             println("currentBuildNumber = ${currentBuild}")
 	    
-		def currentBuildJson =sh(script: "curl -s '${urlPrefix}/220/api/json?pretty=true' ${auth}", returnStdout: true)
+		def currentBuildJson =sh(script: "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true)
 		Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
 		def status = jsonContent.get("result")
 		println("Status = ${status}")
