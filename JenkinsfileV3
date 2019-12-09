@@ -25,6 +25,7 @@ node('master') {
 	{
 		def getCompletedBuild = sh(script: "curl -s ${urlPrefix}/lastCompletedBuild/buildNumber ${auth}", returnStdout: true)	
     		println("LastCompletedBuild = ${getCompletedBuild}")
+		println("currentBuildNumber = ${currentBuild}")
 		if (currentBuild == getCompletedBuild)	{
 			def currentBuildJson =sh(script: "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true) 
 			Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
