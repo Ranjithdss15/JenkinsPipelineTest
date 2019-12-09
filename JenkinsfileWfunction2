@@ -36,7 +36,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
               else {
 
                 print "Smoke Test Failed"
-                sh 'exit 0'
+                sh 'exit'
                 }
             }
 
