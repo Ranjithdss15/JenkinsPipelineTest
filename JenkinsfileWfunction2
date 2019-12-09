@@ -12,8 +12,8 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
             def previousBuild = sh(script: "curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}", returnStdout: true).trim() as Integer
             println("previousBuildNumber = ${previousBuild}")
             def currentBuild = previousBuild + 1
-	    def currentBuildString = sh ("${currentBuild}").trim() as String
-	    println("surrent String : ${currentBuildString}")
+	    //def currentBuildString = sh ("${currentBuild}").trim() as String
+	    //println("surrent String : ${currentBuildString}")
             println("currentBuildNumber = ${currentBuild}")
             //trigerring Job
               sh  "curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam}' ${auth}"
