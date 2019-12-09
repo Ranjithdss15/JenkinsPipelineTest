@@ -24,23 +24,23 @@ node('master') {
 	while (true)
 	{
 		def getCompletedBuild = sh(script: "curl -s ${urlPrefix}/lastCompletedBuild/buildNumber ${auth}", returnStdout: true)	
-    
+    		println("LastCompletedBuild = ${getCompletedBuild}")
 		if (currentBuild == getCompletedBuild)	{
-        def currentBuildJson =sh(script: "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true) 
-        Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
-        def status = jsonContent.get("result")
-        println("Current Build Status = ${status}")
+			def currentBuildJson =sh(script: "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true) 
+			Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
+			def status = jsonContent.get("result")
+			println("Current Build Status = ${status}")
 			
-      if(status == "SUCCESS") {
-          print "Smoke Test Passed"
-          break
-          }
+		      if(status == "SUCCESS") {
+			  print "Smoke Test Passed"
+			  break
+			  }
 
 			else {
 
-				print "Smoke Test Failed"
-				sh 'exit 1'
-				}
+			  print "Smoke Test Failed"
+			  sh 'exit 1'
+			  }
 		}
 		
 	}
