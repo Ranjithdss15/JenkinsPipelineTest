@@ -1,16 +1,22 @@
-import groovy.json.JsonSlurper
+import groovy.json.*
+
+
 node('master') {
 
 	stage ("Invoke Pipeline")
 	  {
-    
-    def previousBuild = sh(script: "curl -s 'http://35.168.32.83:8080/job/getBuildNumber/179/api/json?pretty=true' --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true)
-    //.trim() as Integer
-		println("previousBuildNumber = ${previousBuild}")
-		//def status=previousBuild['result']
-		Map jsonContent = (Map) new JsonSlurper().parseText(previousBuild)
-		def status2 = jsonContent.get("result")
-		println("Status = ${status2}")
+		            def jenkinsURL = "35.168.32.83:8080"
+            def jobName = "getBuildNumber"
+            def user = "admin"
+            def jenkinsToken = "11913b5a828895141297ffbb5fca801565"
+            def ENVIRONMENT = env.ENVIRONMENT
+            def SMOKE_SERVER = env.SMOKE_SERVER
+            def urlPrefix = "http://${jenkinsURL}/job/${jobName}"
+            def auth = "--user ${user}:$jenkinsToken"
+		 def currentBuildJson =sh(script: "curl -s '${urlPrefix}/218/api/json?pretty=true' ${auth}", returnStdout: true)
+		Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
+		def status = jsonContent.get("result")
+		println("Status = ${status}")
     
     }
    }
