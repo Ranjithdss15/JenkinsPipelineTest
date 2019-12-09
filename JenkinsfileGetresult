@@ -4,7 +4,7 @@ node('master') {
 	stage ("Invoke Pipeline")
 	  {
     
-    def previousBuild = sh(script: "curl -s 'http://35.168.32.83:8080/job/getBuildNumber/179/api/json?pretty=true&tree=result' --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true)
+    def previousBuild = sh(script: "curl -s 'http://35.168.32.83:8080/job/getBuildNumber/179/api/json?pretty=true' --user admin:11913b5a828895141297ffbb5fca801565", returnStdout: true)
     //.trim() as Integer
 		println("previousBuildNumber = ${previousBuild}")
 		//def status=previousBuild['result']
