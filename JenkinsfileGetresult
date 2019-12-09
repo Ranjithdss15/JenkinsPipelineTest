@@ -1,3 +1,4 @@
+import groovy.json.JsonSlurperClassic
 node('master') {
 
 	stage ("Invoke Pipeline")
@@ -7,7 +8,9 @@ node('master') {
     //.trim() as Integer
 		println("previousBuildNumber = ${previousBuild}")
 		def status=previousBuild['result']
-		println("Status = ${status}")
+		Map jsonContent = (Map) new JsonSlurper().parseText(status)
+		def status2 = jsonContent.get("result")
+		println("Status = ${status2}")
     
     }
    }
