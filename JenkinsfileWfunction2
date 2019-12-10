@@ -9,7 +9,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
              urlPrefix = "http://${jenkinsURL}/job/${jobName}"
              auth = "--user ${user}:$jenkinsToken"
 	     timeVar1 = 1
-	     time = sh (script: " set +x && date +%R", returnStdout: true)
+	    
 
              previousBuild = sh(script: "{ set +x; } 2>/dev/null && curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}", returnStdout: true).trim() as Integer
             println("previousBuildNumber = ${previousBuild}")
@@ -26,6 +26,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
           {
 
           //  println("currentBuildNumber = ${currentBuild}")
+	   	time = sh (script: " { set +x; } 2>/dev/null && date +%R", returnStdout: true)
 		currentBuildJson =sh(script: "{ set +x; } 2>/dev/null && curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true)
 	
 		Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
