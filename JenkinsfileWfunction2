@@ -17,7 +17,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
 	    //println("surrent String : ${currentBuildString}")
             println("currentBuildNumber = ${currentBuild}")
             //trigerring Job
-              sh  "curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam}' ${auth}"
+              sh  "set +x && curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam}' ${auth}"
 	sleep 10
 
 
@@ -25,12 +25,11 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
           {
 
           //  println("currentBuildNumber = ${currentBuild}")
-	     	sh "set +x"
 		currentBuildJson =sh(script: "set +x && curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true)
-		time = sh (script: "date +%R", returnStdout: true)
+		time = sh (script: "set +x && date +%R", returnStdout: true)
 		Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
 		 status = jsonContent.get("result")
-		//println("Status = ${status}")
+		println("Status = ${status}")
                   
 		if(status == "SUCCESS") {
                 print "Smoke Test Passed"
