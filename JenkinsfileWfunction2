@@ -10,14 +10,14 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
              auth = "--user ${user}:$jenkinsToken"
 	     timeVar1 = 1
 
-             previousBuild = sh(script: "curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}", returnStdout: true).trim() as Integer
+             previousBuild = sh(script: "set +x && curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}", returnStdout: true).trim() as Integer
             println("previousBuildNumber = ${previousBuild}")
              currentBuild = previousBuild + 1
 	    //def currentBuildString = sh ("${currentBuild}").trim() as String
 	    //println("surrent String : ${currentBuildString}")
             println("currentBuildNumber = ${currentBuild}")
             //trigerring Job
-              sh  "curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam}' ${auth}"
+              sh  "set +x && curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam}' ${auth}"
 	sleep 10
 	
 		
@@ -25,8 +25,8 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
           {
 
           //  println("currentBuildNumber = ${currentBuild}")
-		currentBuildJson =sh(script: "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true)
-		time = sh (script: "date +%R", returnStdout: true)
+		currentBuildJson =sh(script: "set +x && curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true)
+		time = sh (script: " set +x && date +%R", returnStdout: true)
 		Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
 		 status = jsonContent.get("result")
 		println("Status = ${status}")
@@ -39,7 +39,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
 		else if ( status == null ) {
 		//echo "Still Building"
 			if (timeVar1 == 1) {
-			println("smoke test ${currentBuild}started at ${time}")
+			println("smoke test ${currentBuild} started at ${time}")
 			timeVar1++
 			}
 		}
@@ -68,7 +68,6 @@ node('master') {
 
 	stage ("Invoke in Smoke Environment")
 	  	{
-		sh 'set +x'
 		 ENVIRONMENT1 = env.ENVIRONMENT1
 		 SMOKE_SERVER1 = env.SMOKE_SERVER
 		invokeSmoke(ENVIRONMENT1,SMOKE_SERVER)
