@@ -4,21 +4,25 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
             jobName = "getBuildNumber"
             user = "admin"
             jenkinsToken = "11913b5a828895141297ffbb5fca801565"
-             ENVIRONMENT = env.ENVIRONMENT
-             SMOKE_SERVER = env.SMOKE_SERVER
-             urlPrefix = "http://${jenkinsURL}/job/${jobName}"
-             auth = "--user ${user}:$jenkinsToken"
-	     timeVar1 = 1
+            ENVIRONMENT = env.ENVIRONMENT
+            SMOKE_SERVER = env.SMOKE_SERVER
+            urlPrefix = "http://${jenkinsURL}/job/${jobName}"
+            auth = "--user ${user}:$jenkinsToken"
+	    timeVar1 = 1
+	    silentVerbose = "{ set +x; } 2>/dev/null"
+	    getBuildNumber = "curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}"
+	    triggerBuild = "curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam} ${auth}"
+	    getBuildStatus = "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}"
 	    
 
-             previousBuild = sh(script: "{ set +x; } 2>/dev/null && curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}", returnStdout: true).trim() as Integer
+             previousBuild = sh(script: "${triggerBuild} && ${getBuildNumber}", returnStdout: true).trim() as Integer
             println("previousBuildNumber = ${previousBuild}")
              currentBuild = previousBuild + 1
 	    //def currentBuildString = sh ("${currentBuild}").trim() as String
 	    //println("surrent String : ${currentBuildString}")
             println("currentBuildNumber = ${currentBuild}")
             //trigerring Job
-              sh  "{ set +x; } 2>/dev/null && curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam}' ${auth}"
+              sh  "${silentVerbose} && ${triggerBuild}"
 	sleep 10
 	
 		
@@ -26,8 +30,8 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
           {
 
           //  println("currentBuildNumber = ${currentBuild}")
-	   	time = sh (script: " { set +x; } 2>/dev/null && date +%R", returnStdout: true)
-		currentBuildJson =sh(script: "{ set +x; } 2>/dev/null && curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true)
+	   	time = sh (script: "${silentVerbose} && date +%R", returnStdout: true)
+		currentBuildJson =sh(script: "${silentVerbose} && ${getBuildStatus}", returnStdout: true)
 	
 		Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
 		 status = jsonContent.get("result")
