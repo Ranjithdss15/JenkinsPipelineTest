@@ -8,6 +8,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
              SMOKE_SERVER = env.SMOKE_SERVER
              urlPrefix = "http://${jenkinsURL}/job/${jobName}"
              auth = "--user ${user}:$jenkinsToken"
+	     timeVar1 = 1
 
              previousBuild = sh(script: "curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}", returnStdout: true).trim() as Integer
             println("previousBuildNumber = ${previousBuild}")
@@ -26,22 +27,28 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
             println("currentBuildNumber = ${currentBuild}")
 	     	sh "set +x"
 		currentBuildJson =sh(script: "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true)
-
+		time = sh (script: "date +%R", returnStdout: true)
 		Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
 		 status = jsonContent.get("result")
 		println("Status = ${status}")
                   
 		if(status == "SUCCESS") {
                 print "Smoke Test Passed"
+		println("smoke test ${currentBuild} ended at ${time})
                 break
                 }
 		else if ( status == null ) {
 		echo "Still Building"
+			if (timeVar1 == 1) {
+			println("smoke test ${currentBuild}started at ${time})
+			timeVar1++
+			}
 		}
 
               else {
 
                 print "Smoke Test Failed"
+		println("smoke test ${currentBuild} ended at ${time})
               	sh 'exit 1'
 		}
 		
