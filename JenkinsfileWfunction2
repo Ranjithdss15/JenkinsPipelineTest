@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurper
+sh 'set +x'
 def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
             jenkinsURL = "35.168.32.83:8080"
             jobName = "getBuildNumber"
@@ -17,16 +18,16 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
 	    //println("surrent String : ${currentBuildString}")
             println("currentBuildNumber = ${currentBuild}")
             //trigerring Job
-              sh  "set +x && curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam}' ${auth}"
+              sh  "curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam}' ${auth}"
 	sleep 10
-		sh "set +x"
+	
 		
           while (true)
           {
 
           //  println("currentBuildNumber = ${currentBuild}")
 		currentBuildJson =sh(script: "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}", returnStdout: true)
-		time = sh (script: "set +x && date +%R", returnStdout: true)
+		time = sh (script: "date +%R", returnStdout: true)
 		Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
 		 status = jsonContent.get("result")
 		println("Status = ${status}")
