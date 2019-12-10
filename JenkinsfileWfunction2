@@ -29,7 +29,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
 		time = sh (script: " set +x && date +%R", returnStdout: true)
 		Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
 		 status = jsonContent.get("result")
-		println("Status = ${status}")
+		//println("Status = ${status}")
                   
 		if(status == "SUCCESS") {
                 print "Smoke Test Passed"
