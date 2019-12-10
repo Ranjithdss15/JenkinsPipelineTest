@@ -11,7 +11,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
 	    timeVar1 = 1
 	    silentVerbose = "{ set +x; } 2>/dev/null"
 	    getBuildNumber = "curl -s ${urlPrefix}/lastBuild/buildNumber ${auth}"
-	    triggerBuild = "curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam} ${auth}"
+	    triggerBuild = "curl -X POST ${urlPrefix}/buildWithParameters?'ENVIRONMENT=${ENVIRONMENTparam}&SMOKE_SERVER=${SMOKE_SERVERparam}' ${auth}"
 	    getBuildStatus = "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}"
 	    
 
