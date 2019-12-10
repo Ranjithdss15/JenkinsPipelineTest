@@ -34,13 +34,13 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
                   
 		if(status == "SUCCESS") {
                 print "Smoke Test Passed"
-		println("smoke test ${currentBuild} ended at ${time})
+		println("smoke test ${currentBuild} ended at ${time}")
                 break
                 }
 		else if ( status == null ) {
 		echo "Still Building"
 			if (timeVar1 == 1) {
-			println("smoke test ${currentBuild}started at ${time})
+			println("smoke test ${currentBuild}started at ${time}")
 			timeVar1++
 			}
 		}
@@ -48,7 +48,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
               else {
 
                 print "Smoke Test Failed"
-		println("smoke test ${currentBuild} ended at ${time})
+		println("smoke test ${currentBuild} ended at ${time}")
               	sh 'exit 1'
 		}
 		
