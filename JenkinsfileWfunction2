@@ -31,7 +31,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
 
           //  println("currentBuildNumber = ${currentBuild}")
 	   	time = sh (script: "${silentVerbose} && date +%R", returnStdout: true)
-		currentBuildJson =sh(script: "${silentVerbose} && ${getBuildStatus}", returnStdout: true)
+		currentBuildJson =sh(script: "${getBuildStatus}", returnStdout: true)
 	
 		Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
 		 status = jsonContent.get("result")
