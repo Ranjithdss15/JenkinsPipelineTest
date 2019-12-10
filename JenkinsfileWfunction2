@@ -21,7 +21,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
             println("currentBuildNumber = ${currentBuild}")
             //trigerring Job
               sh  "${silentVerbose} && ${triggerBuild}"
-	sleep 10
+	sleep 15
 	
 		
           while (true)
