@@ -1,5 +1,4 @@
 import groovy.json.JsonSlurper
-sh 'set +x'
 def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
             jenkinsURL = "35.168.32.83:8080"
             jobName = "getBuildNumber"
@@ -69,6 +68,7 @@ node('master') {
 
 	stage ("Invoke in Smoke Environment")
 	  	{
+		sh 'set +x'
 		 ENVIRONMENT1 = env.ENVIRONMENT1
 		 SMOKE_SERVER1 = env.SMOKE_SERVER
 		invokeSmoke(ENVIRONMENT1,SMOKE_SERVER)
