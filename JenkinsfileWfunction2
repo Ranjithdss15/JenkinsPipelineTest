@@ -18,8 +18,6 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
              previousBuild = sh(script: "${silentVerbose} && ${getBuildNumber}", returnStdout: true).trim() as Integer
             println("previousBuildNumber = ${previousBuild}")
              currentBuild = previousBuild + 1
-	    //def currentBuildString = sh ("${currentBuild}").trim() as String
-	    //println("surrent String : ${currentBuildString}")
             println("currentBuildNumber = ${currentBuild}")
             //trigerring Job
               sh  "${silentVerbose} && ${triggerBuild}"
@@ -31,7 +29,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
 
           //  println("currentBuildNumber = ${currentBuild}")
 	   	time = sh (script: "${silentVerbose} && date +%R", returnStdout: true)
-		currentBuildJson =sh(script: "${getBuildStatus}", returnStdout: true)
+		currentBuildJson =sh(script: "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}}", returnStdout: true)
 	
 		Map jsonContent = (Map) new JsonSlurper().parseText(currentBuildJson)
 		 status = jsonContent.get("result")
