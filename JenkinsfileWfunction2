@@ -15,7 +15,7 @@ def invokeSmoke(ENVIRONMENTparam,SMOKE_SERVERparam) {
 	    getBuildStatus = "curl -s '${urlPrefix}/${currentBuild}/api/json?pretty=true' ${auth}"
 	    
 
-             previousBuild = sh(script: "${triggerBuild} && ${getBuildNumber}", returnStdout: true).trim() as Integer
+             previousBuild = sh(script: "${silentVerbose} && ${getBuildNumber}", returnStdout: true).trim() as Integer
             println("previousBuildNumber = ${previousBuild}")
              currentBuild = previousBuild + 1
 	    //def currentBuildString = sh ("${currentBuild}").trim() as String
